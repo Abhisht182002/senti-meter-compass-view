@@ -1,4 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SentimentCardProps {
   title: string;
@@ -58,29 +60,80 @@ const SentimentCard = ({ title, value, description, variant }: SentimentCardProp
 };
 
 export const SentimentCards = () => {
+  const [sentimentData, setSentimentData] = useState({
+    total: 0,
+    positive: 0,
+    neutral: 0,
+    negative: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSentimentData();
+  }, []);
+
+  const fetchSentimentData = async () => {
+    try {
+      const { data: emails, error } = await supabase
+        .from('Email')
+        .select('category');
+
+      if (error) throw error;
+
+      const total = emails?.length || 0;
+      const positive = emails?.filter(email => email.category?.toLowerCase() === 'positive').length || 0;
+      const neutral = emails?.filter(email => email.category?.toLowerCase() === 'neutral').length || 0;
+      const negative = emails?.filter(email => email.category?.toLowerCase() === 'negative').length || 0;
+
+      setSentimentData({ total, positive, neutral, negative });
+    } catch (error) {
+      console.error('Error fetching sentiment data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {[1, 2, 3, 4].map((i) => (
+          <Card key={i} className="animate-pulse">
+            <CardHeader className="pb-2">
+              <div className="h-4 bg-muted rounded w-3/4"></div>
+            </CardHeader>
+            <CardContent>
+              <div className="h-8 bg-muted rounded w-1/2 mb-1"></div>
+              <div className="h-3 bg-muted rounded w-2/3"></div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <SentimentCard
         title="Total Complaints"
-        value={113}
+        value={sentimentData.total}
         description="Overall complaints received"
         variant="total"
       />
       <SentimentCard
         title="Positive Sentiment"
-        value={4}
+        value={sentimentData.positive}
         description="Customers with positive feedback"
         variant="positive"
       />
       <SentimentCard
         title="Neutral Sentiment"
-        value={16}
+        value={sentimentData.neutral}
         description="Customers with neutral feedback"
         variant="neutral"
       />
       <SentimentCard
         title="Negative Sentiment"
-        value={93}
+        value={sentimentData.negative}
         description="Customers with negative feedback"
         variant="negative"
       />
