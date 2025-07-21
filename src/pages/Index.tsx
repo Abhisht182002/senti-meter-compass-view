@@ -10,7 +10,7 @@ const Index = () => {
       
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 overflow-auto">
-          <div className="p-6 space-y-6">
+          <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
             <DashboardHeader
               title="Dashboard"
               subtitle="Monitor and manage all customer complaints with real-time sentiment analysis."
