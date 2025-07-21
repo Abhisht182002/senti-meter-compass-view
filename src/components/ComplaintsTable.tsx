@@ -52,6 +52,51 @@ const getStatusBadge = (status: string) => {
   }
 };
 
+const getEmotionWithEmoji = (emotion: string) => {
+  const emotionMap: Record<string, string> = {
+    anger: '😠',
+    angry: '😠',
+    joy: '😊',
+    happy: '😊',
+    happiness: '😊',
+    sad: '😢',
+    sadness: '😢',
+    fear: '😨',
+    scared: '😨',
+    surprise: '😲',
+    surprised: '😲',
+    disgust: '🤢',
+    disgusted: '🤢',
+    love: '❤️',
+    excited: '🤩',
+    excitement: '🤩',
+    frustrated: '😤',
+    frustration: '😤',
+    disappointed: '😞',
+    disappointment: '😞',
+    confused: '😕',
+    confusion: '😕',
+    worried: '😟',
+    worry: '😟',
+    anxious: '😰',
+    anxiety: '😰',
+    calm: '😌',
+    peaceful: '😌',
+    grateful: '🙏',
+    gratitude: '🙏',
+    annoyed: '😒',
+    irritated: '😒',
+    bored: '😴',
+    tired: '😴',
+    neutral: '😐'
+  };
+
+  if (!emotion) return "N/A";
+  
+  const emoji = emotionMap[emotion.toLowerCase()] || '😐';
+  return `${emoji} ${emotion}`;
+};
+
 export const ComplaintsTable = () => {
   const [threads, setThreads] = useState<EmailThread[]>([]);
   const [emails, setEmails] = useState<Record<string, Email[]>>({});
@@ -220,7 +265,7 @@ export const ComplaintsTable = () => {
                                     </div>
                                     <div>
                                       <span className="font-medium text-muted-foreground">Emotion:</span>
-                                      <div>{email.sub_class || "N/A"}</div>
+                                      <div>{getEmotionWithEmoji(email.sub_class)}</div>
                                     </div>
                                     <div>
                                       <span className="font-medium text-muted-foreground">Department Assigned:</span>
