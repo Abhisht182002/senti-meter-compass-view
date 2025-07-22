@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { 
@@ -73,7 +74,7 @@ export const DashboardSidebar = () => {
       {/* Sidebar */}
       <div className={cn(
         "flex h-screen bg-card border-r border-border transition-all duration-300 relative z-50",
-        // Desktop sizing
+        // Desktop sizing - always show on desktop
         "hidden md:flex",
         collapsed ? "w-16" : "w-64",
         // Mobile positioning - slide in from left
