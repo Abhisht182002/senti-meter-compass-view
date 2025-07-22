@@ -1,31 +1,30 @@
 
-import { DashboardSidebar } from "@/components/DashboardSidebar";
-import { DashboardHeader } from "@/components/DashboardHeader";
+import { TopNavigation } from "@/components/TopNavigation";
 import { SentimentCards } from "@/components/SentimentCards";
 import { SentimentChart } from "@/components/SentimentChart";
 import { ComplaintsTable } from "@/components/ComplaintsTable";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background flex">
-      <DashboardSidebar />
+    <div className="min-h-screen bg-background">
+      <TopNavigation />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-auto">
-          <div className="p-4 sm:p-6 md:pl-20 lg:pl-6 space-y-4 sm:space-y-6">
-            <DashboardHeader
-              title="Dashboard"
-              subtitle="Monitor and manage all customer complaints with real-time sentiment analysis."
-            />
-            
-            <SentimentCards />
-            
-            <SentimentChart />
-            
-            <ComplaintsTable />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground mt-1">
+              Monitor and manage all customer complaints with real-time sentiment analysis.
+            </p>
           </div>
+          
+          <SentimentCards />
+          
+          <SentimentChart />
+          
+          <ComplaintsTable />
         </div>
-      </div>
+      </main>
     </div>
   );
 };
