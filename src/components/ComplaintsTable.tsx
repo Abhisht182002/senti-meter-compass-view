@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search, Filter, ChevronDown, ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface EmailThread {
@@ -312,8 +312,8 @@ export const ComplaintsTable = () => {
               </TableHeader>
               <TableBody>
                 {threads.map((thread) => (
-                  <>
-                    <TableRow key={thread.thread_id} className="hover:bg-muted/50">
+                  <React.Fragment key={thread.thread_id}>
+                    <TableRow className="hover:bg-muted/50">
                       <TableCell className="font-medium font-mono">{thread.thread_id}</TableCell>
                       <TableCell>{formatDate(thread.created_at)}</TableCell>
                       <TableCell>{getSentimentBadge(thread.thread_sentiment)}</TableCell>
@@ -384,7 +384,7 @@ export const ComplaintsTable = () => {
                         </TableCell>
                       </TableRow>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
               </TableBody>
             </Table>
