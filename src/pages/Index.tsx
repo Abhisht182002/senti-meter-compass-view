@@ -1,6 +1,7 @@
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { SentimentCards } from "@/components/SentimentCards";
+import { SentimentChart } from "@/components/SentimentChart";
 import { ComplaintsTable } from "@/components/ComplaintsTable";
 
 const Index = () => {
@@ -18,7 +19,14 @@ const Index = () => {
             
             <SentimentCards />
             
-            <ComplaintsTable />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+              <div className="lg:col-span-1">
+                <SentimentChart />
+              </div>
+              <div className="lg:col-span-2">
+                <ComplaintsTable />
+              </div>
+            </div>
           </div>
         </div>
       </div>
